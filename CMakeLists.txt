@@ -42,7 +42,7 @@ set (CMAKE_CXX_STANDARD 11)
 # Language bindings options
 #
 include(custom_color_messages)
-option(ENABLE_fortran "Enables the building of Fortran bindings (needs Fortran compiler)" ON)
+option(ENABLE_fortran "Enables the building of Fortran bindings (needs Fortran compiler)" OFF)
 if(ENABLE_fortran)
     enable_language(Fortran)
     set(Fortran_ENABLED ON)
@@ -68,6 +68,9 @@ option_with_flags(ENABLE_TSAN "Enables thread sanitizer" OFF
                   "-fsanitize=thread" "-fno-omit-frame-pointer -pie")
 option_with_flags(ENABLE_UBSAN "Enables undefined behavior sanitizer" OFF
                   "-fsanitize=undefined" "-fno-omit-frame-pointer")
+option(ENABLE_Python "Enables the building of Python bindings" OFF)
+option(BUILD_DOCS "Enables the building of documentation" OFF)
+option(BUILD_TESTING "Enables the building of tests" OFF)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
@@ -159,7 +162,6 @@ if(ENABLE_MPI)
     set(EXTERNAL_LIBRARIES ${EXTERNAL_LIBRARIES} ${MPI_CXX_LIBRARIES})
 endif()
 
-option(ENABLE_Python "Enables the building of Python bindings" ON)
 if(ENABLE_Python)
 # Find Python
     set(Python_ADDITIONAL_VERSIONS 3.9 3.8 3.7 3.6)
@@ -171,22 +173,22 @@ if(ENABLE_Python)
 endif()
 
 # Documentation
-find_package(Doxygen)
-find_package(Sphinx)
-find_package(Latex)
-if(DOXYGEN_EXECUTABLE)
-    if(SPHINX_EXECUTABLE)
-        add_subdirectory(docs)
+if(BUILD_DOCS)
+    find_package(Doxygen)
+    find_package(Sphinx)
+    find_package(Latex)
+    if(DOXYGEN_EXECUTABLE)
+        if(SPHINX_EXECUTABLE)
+            add_subdirectory(docs)
+        endif()
     endif()
-endif()
+endif()  
 add_subdirectory(src)
-
 
 #
 # Testing
 #
-include(CTest)
 if(BUILD_TESTING)
+    include(CTest)
     add_subdirectory (test)
 endif()
-
