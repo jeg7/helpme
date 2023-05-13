@@ -34,7 +34,7 @@ set(helpme_EMAIL "andrew.simmonett@nih.gov")
 set(helpme_LICENSE "BSD-3-clause")
 set(helpme_DESCRIPTION "helPME: an efficient library for particle mesh Ewald")
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${helpme_SOURCE_DIR}/cmake)
 
 set (CMAKE_CXX_STANDARD 11)
 
