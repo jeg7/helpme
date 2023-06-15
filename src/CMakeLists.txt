@@ -4,6 +4,9 @@ set(sources_list
 
 include_directories(${FFTW_INCLUDES})
 include_directories(${MKL_INCLUDE_DIR})
+if(HAVE_MPI)
+    include_directories(${MPI_INCLUDE_PATH})
+endif()
 add_library(helpmestatic STATIC ${sources_list})
 target_link_libraries(helpmestatic ${FFTW_LIBRARIES})
 add_library(helpme SHARED ${sources_list})

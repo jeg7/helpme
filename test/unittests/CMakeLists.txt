@@ -32,6 +32,7 @@ if(HAVE_MPI)
     )
     if(HAVE_MPI)
         link_libraries(${MPI_CXX_LIBRARIES})
+        include_directories(${MPI_INCLUDE_PATH})
     endif()
 endif()
 

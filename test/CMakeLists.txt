@@ -27,6 +27,7 @@ include_directories(${MKL_INCLUDE_DIR})
 
 if(HAVE_MPI)
     link_libraries(${MPI_CXX_LIBRARIES})
+    include_directories(${MPI_INCLUDE_PATH})
 endif()
 
 # Ensure headers are inlined every time a build is triggered
@@ -173,6 +174,7 @@ if(HAVE_MPI)
     # Fortran example
     if(Fortran_ENABLED)
         link_libraries(${MPI_Fortran_LIBRARIES})
+        include_directories(${MPI_Fortran_INCLUDE_DIRS})
         add_executable(RunFortranMPIWrapper ${PROJECT_SOURCE_DIR}/src/helpme.F90 fullexample_parallel.F90 )
         set_target_properties(RunFortranMPIWrapper PROPERTIES LINKER_LANGUAGE Fortran)
         target_link_libraries(RunFortranMPIWrapper helpmestatic ${cpplib} ${EXTERNAL_LIBRARIES})
